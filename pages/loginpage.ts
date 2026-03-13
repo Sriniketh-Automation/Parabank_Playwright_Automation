@@ -3,21 +3,33 @@ import { step } from '../testcases/base';
 
 export class LoginPage {
   readonly page: Page;
+
+  // Login form locators
   readonly usernameInput: Locator;
   readonly passwordInput: Locator;
   readonly loginButton: Locator;
+
+  // Link locators
   readonly forgotLoginLink: Locator;
   readonly registerLink: Locator;
+
+  // Post login locators
   readonly errorMessage: Locator;
   readonly accountServicesMenu: Locator;
 
   constructor(page: Page) {
     this.page = page;
+
+    // Login form
     this.usernameInput = page.locator('input[name="username"]');
     this.passwordInput = page.locator('input[name="password"]');
-    this.loginButton = page.locator('input[value="Log In"]');
+    this.loginButton = page.getByRole('button', { name: 'Log In' });
+
+    // Links
     this.forgotLoginLink = page.getByRole('link', { name: 'Forgot login info?' });
     this.registerLink = page.getByRole('link', { name: 'Register' });
+
+    // Post login
     this.errorMessage = page.locator('.error');
     this.accountServicesMenu = page.locator('#leftPanel');
   }
@@ -36,7 +48,7 @@ export class LoginPage {
     await this.loginButton.click();
   }
 
-  // Method to click Register link and navigate to registration page
+  // Method to click Register link
   @step('Click Register link')
   async clickRegister() {
     await this.registerLink.click();

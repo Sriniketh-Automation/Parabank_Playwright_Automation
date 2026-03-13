@@ -1,8 +1,11 @@
 import { test as base } from '@playwright/test';
 import { LoginPage } from '../pages/loginpage';
+import { RegisterPage } from '../pages/RegisterPage';
 
 export type TestOptions = {
   loginPage: LoginPage;
+  registerPage: RegisterPage;
+
 };
 
 export const test = base.extend<TestOptions>({
