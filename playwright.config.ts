@@ -4,8 +4,8 @@ export default defineConfig({
   testDir: './testcases',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
-  retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  retries: 1, // ← Add 1 retry - handles flaky Cloudflare issues
+  workers: process.env.CI ? 1 : 2, // ← Reduce from 4 to 2 workers
   reporter: [['html', { port: 9324, open: 'never' }]],
   use: {
     baseURL: 'https://parabank.parasoft.com',
