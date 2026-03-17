@@ -8,6 +8,7 @@ import { ApiHelper } from '../utils/apiHelper';
 import { TransactionHistoryPage } from '../pages/TransactionHistoryPage';
 import { OpenNewAccountPage } from '../pages/OpenNewAccountPage';
 import { RequestLoanPage } from '../pages/RequestLoanPage';
+import { FindTransactionsPage } from '../pages/FindTransactionsPage';
 
 
 export type TestOptions = {
@@ -20,6 +21,7 @@ export type TestOptions = {
   transactionHistoryPage: TransactionHistoryPage;
   openNewAccountPage: OpenNewAccountPage;
   requestLoanPage: RequestLoanPage;
+  findTransactionsPage: FindTransactionsPage;
   
 
 };
@@ -49,6 +51,9 @@ export const test = base.extend<TestOptions>({
   requestLoanPage: async ({ page }, use) => {
     await use(new RequestLoanPage(page));
   },
+  findTransactionsPage: async ({ page }, use) => {
+  await use(new FindTransactionsPage(page));
+},
   // It automatically shares the browser session/cookies!
   apiHelper: async ({ request }, use) => {
     await use(new ApiHelper(request));

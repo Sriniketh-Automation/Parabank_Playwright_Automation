@@ -1,0 +1,12 @@
+{
+  "validUser": {
+    "username": "john",
+    "password": "demo"
+  },
+  "searchByAmount": {
+    "amount": "100"
+  },
+  "searchByDate": {
+    "date": "03-17-2026"
+  }
+}
