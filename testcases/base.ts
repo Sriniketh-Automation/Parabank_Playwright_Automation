@@ -1,33 +1,32 @@
 import { test as base } from '@playwright/test';
 import { LoginPage } from '../pages/loginpage';
 import { RegisterPage } from '../pages/RegisterPage';
+import { AccountsOverviewPage } from '../pages/AccountsOverviewPage';
 
-// Define all page fixture types
 export type TestOptions = {
   loginPage: LoginPage;
   registerPage: RegisterPage;
+  accountsOverviewPage: AccountsOverviewPage;
 };
 
-// Extend base test with page fixtures
 export const test = base.extend<TestOptions>({
-
-  // Fixture for LoginPage
   loginPage: async ({ page }, use) => {
     const loginPage = new LoginPage(page);
     await use(loginPage);
   },
-
-  // Fixture for RegisterPage
   registerPage: async ({ page }, use) => {
     const registerPage = new RegisterPage(page);
     await use(registerPage);
   },
-
+  accountsOverviewPage: async ({ page }, use) => {
+    const accountsOverviewPage = new AccountsOverviewPage(page);
+    await use(accountsOverviewPage);
+  },
 });
 
 export { expect } from '@playwright/test';
 
-// Step decorator - wraps methods in test.step automatically
+// Step decorator
 export function step(stepName?: string) {
   return function decorator(
     target: Function,
