@@ -69,4 +69,14 @@ export class TransferFundsPage {
         console.log(`Destination account ID: ${firstOptionValue}`);
         return firstOptionValue!;
     }
+    // Method to transfer funds to a specific account
+    @step('Transfer funds to specific account')
+    async transferFundsToAccount(amount: string, toAccountId: string) {
+        await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+        await expect(this.page.getByRole('heading', { name: 'Transfer Funds' }))
+            .toBeVisible({ timeout: 30000 });
+        await this.amountInput.fill(amount);
+        await this.toAccountDropdown.selectOption({ value: toAccountId });
+        await this.transferButton.click();
+    }
 }
