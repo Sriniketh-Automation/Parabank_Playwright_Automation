@@ -1,0 +1,18 @@
+{
+  "validUser": {
+    "username": "john",
+    "password": "demo"
+  },
+  "approvedLoan": {
+    "amount": "2000",
+    "downPayment": "500"
+  },
+  "deniedLoanLowDownPayment": {
+    "amount": "100000",
+    "downPayment": "1200"
+  },
+  "deniedLoanInsufficientFunds": {
+    "amount": "100000",
+    "downPayment": "30000"
+  }
+}
