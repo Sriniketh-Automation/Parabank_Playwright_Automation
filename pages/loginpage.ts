@@ -18,6 +18,16 @@ export class LoginPage {
     readonly accountServicesMenu: Locator;
     readonly errorMessage: Locator;
     readonly errorHeading: Locator;
+    //Logout
+    readonly logoutLink: Locator;
+//Cutomer care locators
+    readonly contactLink: Locator;
+readonly customerCareNameInput: Locator;
+readonly customerCareEmailInput: Locator;
+readonly customerCarePhoneInput: Locator;
+readonly customerCareMessageInput: Locator;
+readonly sendToCareButton: Locator;
+readonly customerCareSuccessMessage: Locator;
 
     constructor(page: Page) {
         this.page = page;
@@ -34,9 +44,19 @@ export class LoginPage {
         // Post login
 
         this.accountServicesMenu = this.page.locator('#leftPanel');
-
         this.errorMessage = page.getByText('The username and password could not be verified.');
         this.errorHeading = page.getByRole('heading', { name: 'Error!' });
+        // Logout link
+        this.logoutLink = page.getByRole('link', { name: 'Log Out' });
+
+        // Customer care locators
+        this.contactLink = page.getByRole('link', { name: 'contact', exact: true });
+this.customerCareNameInput = page.locator('#name');
+this.customerCareEmailInput = page.locator('#email');
+this.customerCarePhoneInput = page.locator('#phone');
+this.customerCareMessageInput = page.locator('#message');
+this.sendToCareButton = page.getByRole('button', { name: 'Send to Customer Care' });
+this.customerCareSuccessMessage = page.getByText('A Customer Care Representative will be contacting you.');
     }
 
     // Method to navigate to ParaBank login page
@@ -95,6 +115,45 @@ export class LoginPage {
             throw new Error('Expected error message not found on page');
         }
     }
+    // Method to logout from application
+    @step('Click Log Out link')
+    async logout() {
+        await this.logoutLink.click();
+        await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+    }
+
+    // Method to verify logged out successfully
+    @step('Verify user logged out successfully')
+    async verifyLogout() {
+        await expect(this.loginButton).toBeVisible({ timeout: 30000 });
+        await expect(this.usernameInput).toBeVisible({ timeout: 30000 });
+        console.log('Logout verified - redirected to login page');
+    }
+    
+    // Method to navigate to Customer Care page
+@step('Navigate to Customer Care page')
+async navigateToCustomerCare() {
+  await this.contactLink.click();
+  await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+}
+
+// Method to fill and submit Customer Care form
+@step('Fill and submit Customer Care form')
+async submitCustomerCareForm(testData: any) {
+  await this.customerCareNameInput.fill(testData.name);
+  await this.customerCareEmailInput.fill(testData.email);
+  await this.customerCarePhoneInput.fill(testData.phone);
+  await this.customerCareMessageInput.fill(testData.message);
+  await this.sendToCareButton.click();
+}
+
+// Method to verify Customer Care form submitted successfully
+@step('Verify Customer Care form submitted successfully')
+async verifyCustomerCareSuccess() {
+  await this.page.waitForLoadState('networkidle', { timeout: 30000 });
+  await expect(this.customerCareSuccessMessage).toBeVisible({ timeout: 30000 });
+  console.log('Customer Care form submitted successfully');
+}
 
 
 }

@@ -1,0 +1,12 @@
+{
+  "validUser": {
+    "username": "john",
+    "password": "demo"
+  },
+  "customerCare": {
+    "name": "John Smith",
+    "email": "johnsmith@gmail.com",
+    "phone": "305-123-4567",
+    "message": "I need assistance with my account."
+  }
+}
