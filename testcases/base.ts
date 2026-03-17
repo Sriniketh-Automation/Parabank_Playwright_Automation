@@ -2,11 +2,14 @@ import { test as base } from '@playwright/test';
 import { LoginPage } from '../pages/loginpage';
 import { RegisterPage } from '../pages/RegisterPage';
 import { AccountsOverviewPage } from '../pages/AccountsOverviewPage';
+import { TransferFundsPage } from '../pages/TransferFundsPage';
 
 export type TestOptions = {
   loginPage: LoginPage;
   registerPage: RegisterPage;
   accountsOverviewPage: AccountsOverviewPage;
+  transferFundsPage: TransferFundsPage;
+  
 };
 
 export const test = base.extend<TestOptions>({
@@ -22,6 +25,10 @@ export const test = base.extend<TestOptions>({
     const accountsOverviewPage = new AccountsOverviewPage(page);
     await use(accountsOverviewPage);
   },
+  transferFundsPage: async ({ page }, use) => {
+  const transferFundsPage = new TransferFundsPage(page);
+  await use(transferFundsPage);
+},
 });
 
 export { expect } from '@playwright/test';

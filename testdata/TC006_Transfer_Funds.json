@@ -1,0 +1,10 @@
+{
+  "validUser": {
+    "username": "john",
+    "password": "demo"
+  },
+  "transferData": {
+    "amount": "100",
+    "toAccount": "13011"
+  }
+}
