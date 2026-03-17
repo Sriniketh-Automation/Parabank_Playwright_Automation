@@ -5,6 +5,7 @@ import { AccountsOverviewPage } from '../pages/AccountsOverviewPage';
 import { TransferFundsPage } from '../pages/TransferFundsPage';
 import { BillPayPage } from '../pages/BillPayPage';
 import { ApiHelper } from '../utils/apiHelper';
+import { TransactionHistoryPage } from '../pages/TransactionHistoryPage';
 
 export type TestOptions = {
   loginPage: LoginPage;
@@ -13,6 +14,7 @@ export type TestOptions = {
   transferFundsPage: TransferFundsPage;
   billPayPage: BillPayPage;
   apiHelper: ApiHelper;
+  transactionHistoryPage: TransactionHistoryPage;
 };
 
 export const test = base.extend<TestOptions>({
@@ -32,11 +34,13 @@ export const test = base.extend<TestOptions>({
     await use(new BillPayPage(page));
   },
 
-  // 💡 IMPORTANT: 'request' is Playwright's built-in API fixture
   // It automatically shares the browser session/cookies!
   apiHelper: async ({ request }, use) => {
     await use(new ApiHelper(request));
   },
+  transactionHistoryPage: async ({ page }, use) => {
+  await use(new TransactionHistoryPage(page));
+},
 });
 
 export { expect } from '@playwright/test';
