@@ -3,12 +3,14 @@ import { LoginPage } from '../pages/loginpage';
 import { RegisterPage } from '../pages/RegisterPage';
 import { AccountsOverviewPage } from '../pages/AccountsOverviewPage';
 import { TransferFundsPage } from '../pages/TransferFundsPage';
+import { BillPayPage } from '../pages/BillPayPage';
 
 export type TestOptions = {
   loginPage: LoginPage;
   registerPage: RegisterPage;
   accountsOverviewPage: AccountsOverviewPage;
   transferFundsPage: TransferFundsPage;
+  billPayPage: BillPayPage;
   
 };
 
@@ -28,6 +30,10 @@ export const test = base.extend<TestOptions>({
   transferFundsPage: async ({ page }, use) => {
   const transferFundsPage = new TransferFundsPage(page);
   await use(transferFundsPage);
+},
+billPayPage: async ({ page }, use) => {
+  const billPayPage = new BillPayPage(page);
+  await use(billPayPage);
 },
 });
 
