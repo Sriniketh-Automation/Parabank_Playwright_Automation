@@ -77,6 +77,6 @@ async verifyRegistrationSuccess(username: string) {
     `Welcome ${username}`, { timeout: 60000 }
   );
   await expect(this.successMessage).toBeVisible({ timeout: 60000 });
-  console.log(`✅ Registration successful for user: ${username}`);
+  console.log(`Registration successful for user: ${username}`);
 }
 }

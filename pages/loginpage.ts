@@ -69,7 +69,7 @@ export class LoginPage {
     async verifyLoginSuccess() {
         await this.page.waitForLoadState('networkidle', { timeout: 30000 });
         await expect(this.accountServicesMenu).toBeVisible({ timeout: 30000 });
-        console.log('✅ Login successful - Account Services menu visible');
+        console.log('Login successful - Account Services menu visible');
     }
     @step('Verify login error message')
     async verifyLoginError() {
@@ -88,9 +88,9 @@ export class LoginPage {
         const isInternalError = await internalError.isVisible();
 
         if (isInvalidCredentials) {
-            console.log('✅ Login error message verified - invalid credentials');
+            console.log('Login error message verified - invalid credentials');
         } else if (isInternalError) {
-            console.log('✅ Login error message verified - server error (parallel load)');
+            console.log('Login error message verified - server error (parallel load)');
         } else {
             throw new Error('Expected error message not found on page');
         }

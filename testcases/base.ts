@@ -4,6 +4,7 @@ import { RegisterPage } from '../pages/RegisterPage';
 import { AccountsOverviewPage } from '../pages/AccountsOverviewPage';
 import { TransferFundsPage } from '../pages/TransferFundsPage';
 import { BillPayPage } from '../pages/BillPayPage';
+import { ApiHelper } from '../utils/apiHelper';
 
 export type TestOptions = {
   loginPage: LoginPage;
@@ -11,30 +12,31 @@ export type TestOptions = {
   accountsOverviewPage: AccountsOverviewPage;
   transferFundsPage: TransferFundsPage;
   billPayPage: BillPayPage;
-  
+  apiHelper: ApiHelper;
 };
 
 export const test = base.extend<TestOptions>({
   loginPage: async ({ page }, use) => {
-    const loginPage = new LoginPage(page);
-    await use(loginPage);
+    await use(new LoginPage(page));
   },
   registerPage: async ({ page }, use) => {
-    const registerPage = new RegisterPage(page);
-    await use(registerPage);
+    await use(new RegisterPage(page));
   },
   accountsOverviewPage: async ({ page }, use) => {
-    const accountsOverviewPage = new AccountsOverviewPage(page);
-    await use(accountsOverviewPage);
+    await use(new AccountsOverviewPage(page));
   },
   transferFundsPage: async ({ page }, use) => {
-  const transferFundsPage = new TransferFundsPage(page);
-  await use(transferFundsPage);
-},
-billPayPage: async ({ page }, use) => {
-  const billPayPage = new BillPayPage(page);
-  await use(billPayPage);
-},
+    await use(new TransferFundsPage(page));
+  },
+  billPayPage: async ({ page }, use) => {
+    await use(new BillPayPage(page));
+  },
+
+  // 💡 IMPORTANT: 'request' is Playwright's built-in API fixture
+  // It automatically shares the browser session/cookies!
+  apiHelper: async ({ request }, use) => {
+    await use(new ApiHelper(request));
+  },
 });
 
 export { expect } from '@playwright/test';

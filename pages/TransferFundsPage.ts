@@ -58,6 +58,16 @@ export class TransferFundsPage {
         await expect(this.successHeading).toBeVisible({ timeout: 30000 });
         await expect(this.page.getByText(`$${amount}.00 has been transferred`))
             .toBeVisible({ timeout: 30000 });
-        console.log(`✅ Transfer of $${amount} completed successfully`);
+        console.log(`Transfer of $${amount} completed successfully`);
+    }
+
+    // Method to get destination account ID before transfer
+    //Captured BEFORE transfer for API validation AFTER
+    @step('Get destination account ID')
+    async getToAccountId(): Promise<string> {
+        const options = await this.toAccountDropdown.locator('option').all();
+        const firstOptionValue = await options[0].getAttribute('value');
+        console.log(`Destination account ID: ${firstOptionValue}`);
+        return firstOptionValue!;
     }
 }

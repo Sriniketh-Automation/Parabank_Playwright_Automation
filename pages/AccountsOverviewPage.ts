@@ -35,7 +35,7 @@ export class AccountsOverviewPage {
     await expect(this.accountTable).toBeVisible({ timeout: 30000 });
     await expect(this.accountTableHeader).toBeVisible({ timeout: 30000 });
     await expect(this.totalBalance).toBeVisible({ timeout: 30000 });
-    console.log('✅ Accounts Overview page loaded successfully');
+    console.log('Accounts Overview page loaded successfully');
   }
 
   // Method to verify account exists in table
@@ -44,6 +44,6 @@ export class AccountsOverviewPage {
     await expect(
       this.page.getByRole('link', { name: accountNumber })
     ).toBeVisible({ timeout: 30000 });
-    console.log(`✅ Account ${accountNumber} found in overview`);
+    console.log(`Account ${accountNumber} found in overview`);
   }
 }

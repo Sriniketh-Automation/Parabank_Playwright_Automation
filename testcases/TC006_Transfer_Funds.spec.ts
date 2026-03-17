@@ -5,31 +5,33 @@ const testData = JsonReader.getData('TC006_Transfer_Funds');
 
 test.describe('Transfer Funds', () => {
 
-    test('TC006 - Transfer funds between accounts @smoke @regression',
-        async ({ loginPage, transferFundsPage }) => {
+  test('TC006 - Transfer funds and verify via API @smoke @regression',
+    async ({ loginPage, transferFundsPage, apiHelper }) => {
 
-            // Step 1: Login
-            await loginPage.goto();
-            await loginPage.login(
-                testData.validUser.username,
-                testData.validUser.password
-            );
-            await loginPage.verifyLoginSuccess();
+    // UI - Login
+    await loginPage.goto();
+    await loginPage.login(
+      testData.validUser.username,
+      testData.validUser.password
+    );
+    await loginPage.verifyLoginSuccess();
 
-            // Step 2: Navigate to Transfer Funds
-            await transferFundsPage.navigateToTransferFundsPage();
+    // UI - Navigate to Transfer Funds
+    await transferFundsPage.navigateToTransferFundsPage();
 
+    // Capture toAccountId before transfer for API validation
+    const toAccountId = await transferFundsPage.getToAccountId();
 
-            // Step 3: Perform transfer - no hardcoded account
-            await transferFundsPage.transferFunds(
-                testData.transferData.amount
-            );
+    // UI - Perform transfer and verify
+    await transferFundsPage.transferFunds(testData.transferData.amount);
+    await transferFundsPage.verifyTransferSuccess(testData.transferData.amount);
 
-            // Step 4: Verify transfer success
-            await transferFundsPage.verifyTransferSuccess(
-                testData.transferData.amount
-            );
+    // API - Verify transaction exists in backend
+    await apiHelper.verifyTransactionExists(
+      toAccountId,
+      Number(testData.transferData.amount)
+    );
 
-        });
+  });
 
 });

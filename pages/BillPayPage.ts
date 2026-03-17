@@ -67,6 +67,6 @@ export class BillPayPage {
         await expect(this.page.getByText(
             `Bill Payment to ${payeeName} in the amount of $${amount}.00`
         )).toBeVisible({ timeout: 30000 });
-        console.log(`✅ Bill payment of $${amount} to ${payeeName} completed successfully`);
+        console.log(`Bill payment of $${amount} to ${payeeName} completed successfully`);
     }
 }
