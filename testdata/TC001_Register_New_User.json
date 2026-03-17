@@ -2,13 +2,13 @@
   "validRegistration": {
     "firstName": "Test",
     "lastName": "User",
-    "address": "123 Main St",
+    "address": "123 Main Street",
     "city": "New York",
     "state": "NY",
     "zipCode": "10001",
-    "phone": "1234567890",
-    "ssn": "123456789",
-    "username": "testuser123",
+    "phone": "9876543210",
+    "ssn": "987654321",
+    "username": "testuser_srini_004",
     "password": "Test@1234"
   }
 }

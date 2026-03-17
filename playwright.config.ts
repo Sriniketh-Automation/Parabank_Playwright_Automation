@@ -1,18 +1,30 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: './testcases',
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  reporter: [['html', { port: 9324, open: 'never' }]],
   use: {
     baseURL: 'https://parabank.parasoft.com',
-    browserName: 'chromium',
     headless: false,
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
+
+    // Bot bypass
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    extraHTTPHeaders: {
+      'Accept-Language': 'en-US,en;q=0.9',
+    },
+    launchOptions: {
+      args: [
+        '--disable-blink-features=AutomationControlled',
+        '--disable-web-security',
+        '--no-sandbox'
+      ]
+    }
   },
   projects: [
     {

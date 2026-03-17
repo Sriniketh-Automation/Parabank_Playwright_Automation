@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator, expect } from '@playwright/test';
 import { step } from '../testcases/base';
 
 export class RegisterPage {
@@ -17,6 +17,8 @@ export class RegisterPage {
   readonly passwordInput: Locator;
   readonly confirmPasswordInput: Locator;
   readonly registerButton: Locator;
+  readonly welcomeHeading: Locator;
+  readonly successMessage: Locator;
 
   constructor(page: Page) {
     this.page = page;
@@ -34,22 +36,20 @@ export class RegisterPage {
     this.passwordInput = page.locator('[id="customer.password"]');
     this.confirmPasswordInput = page.locator('#repeatedPassword');
     this.registerButton = page.getByRole('button', { name: 'Register' });
+
+    // Success locators
+    this.welcomeHeading = page.getByRole('heading', { name: /Welcome/ });
+    this.successMessage = page.getByText(
+      'Your account was created successfully. You are now logged in.'
+    );
   }
 
-  // Method to fill registration form and submit
+  // Method to fill and submit registration form
   @step('Fill and submit registration form')
-  async registerNewUser(testData: {
-    firstName: string;
-    lastName: string;
-    address: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    phone: string;
-    ssn: string;
-    username: string;
-    password: string;
-  }) {
+  async registerNewUser(testData: any) {
+    // Wait for registration form to fully load
+    await this.page.waitForLoadState('domcontentloaded');
+
     await this.firstNameInput.fill(testData.firstName);
     await this.lastNameInput.fill(testData.lastName);
     await this.addressInput.fill(testData.address);
@@ -61,6 +61,22 @@ export class RegisterPage {
     await this.usernameInput.fill(testData.username);
     await this.passwordInput.fill(testData.password);
     await this.confirmPasswordInput.fill(testData.password);
+
+    // Wait before clicking register button
+    await this.page.waitForLoadState('domcontentloaded');
     await this.registerButton.click();
   }
-}   
+
+  // Method to verify registration success
+  @step('Verify registration success message')
+async verifyRegistrationSuccess(username: string) {
+  await this.page.waitForURL('**/parabank/**', { timeout: 60000 });
+  await this.page.waitForLoadState('networkidle', { timeout: 60000 });
+
+  await expect(this.welcomeHeading).toContainText(
+    `Welcome ${username}`, { timeout: 60000 }
+  );
+  await expect(this.successMessage).toBeVisible({ timeout: 60000 });
+  console.log(`✅ Registration successful for user: ${username}`);
+}
+}
