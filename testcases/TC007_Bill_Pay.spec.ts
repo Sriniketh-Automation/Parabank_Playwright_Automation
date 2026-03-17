@@ -17,7 +17,7 @@ test.describe('Bill Pay', () => {
     await loginPage.verifyLoginSuccess();
 
     // Step 2: Navigate to Bill Pay
-    await billPayPage.goto();
+    await billPayPage.navigateToBillPayPage();
 
     // Step 3: Fill and submit bill payment
     await billPayPage.payBill(testData.billPayData);

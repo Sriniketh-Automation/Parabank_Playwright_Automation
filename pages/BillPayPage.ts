@@ -39,7 +39,7 @@ export class BillPayPage {
 
     // Method to navigate to Bill Pay page
     @step('Navigate to Bill Pay page')
-    async goto() {
+    async navigateToBillPayPage() {
         await this.billPayLink.click();
         await this.page.waitForLoadState('networkidle', { timeout: 30000 });
     }
