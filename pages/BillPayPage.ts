@@ -32,7 +32,7 @@ export class BillPayPage {
         this.accountInput = page.locator('input[name="payee.accountNumber"]');
         this.verifyAccountInput = page.locator('input[name="verifyAccount"]');
         this.amountInput = page.locator('input[name="amount"]');
-        this.fromAccountDropdown = page.locator('#fromAccountId');
+        this.fromAccountDropdown = page.locator('select[name="fromAccountId"]');
         this.sendPaymentButton = page.getByRole('button', { name: 'Send Payment' });
         this.successHeading = page.getByRole('heading', { name: 'Bill Payment Complete' });
     }
@@ -69,4 +69,16 @@ export class BillPayPage {
         )).toBeVisible({ timeout: 30000 });
         console.log(`Bill payment of $${amount} to ${payeeName} completed successfully`);
     }
+    // Method to get destination account ID before transfer-API VALIDATION
+    @step('Get source account ID')
+    async getFromAccountId(): Promise<string> {
+        // Scroll to dropdown first
+        await this.fromAccountDropdown.scrollIntoViewIfNeeded();
+        await expect(this.fromAccountDropdown).toBeVisible({ timeout: 30000 });
+
+        const value = await this.fromAccountDropdown.inputValue();
+        console.log(`Source account ID: ${value}`);
+        return value;
+    }
+
 }

@@ -61,8 +61,7 @@ export class TransferFundsPage {
         console.log(`Transfer of $${amount} completed successfully`);
     }
 
-    // Method to get destination account ID before transfer
-    //Captured BEFORE transfer for API validation AFTER
+    // Method to get destination account ID before transfer-API VALIDATION
     @step('Get destination account ID')
     async getToAccountId(): Promise<string> {
         const options = await this.toAccountDropdown.locator('option').all();

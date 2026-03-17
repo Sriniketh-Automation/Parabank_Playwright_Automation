@@ -5,10 +5,10 @@ const testData = JsonReader.getData('TC007_Bill_Pay');
 
 test.describe('Bill Pay', () => {
 
-  test('TC007 - Pay a bill successfully @smoke @regression',
-    async ({ loginPage, billPayPage }) => {
+  test('TC007 - Pay a bill and verify via API @smoke @regression',
+    async ({ loginPage, billPayPage, apiHelper }) => {
 
-    // Step 1: Login
+    // UI - Login
     await loginPage.goto();
     await loginPage.login(
       testData.validUser.username,
@@ -16,16 +16,24 @@ test.describe('Bill Pay', () => {
     );
     await loginPage.verifyLoginSuccess();
 
-    // Step 2: Navigate to Bill Pay
+    // UI - Navigate to Bill Pay
     await billPayPage.navigateToBillPayPage();
 
-    // Step 3: Fill and submit bill payment
-    await billPayPage.payBill(testData.billPayData);
+    // Capture fromAccountId before payment for API validation
+    const fromAccountId = await billPayPage.getFromAccountId();
 
-    // Step 4: Verify payment success
+    // UI - Fill and submit bill payment
+    await billPayPage.payBill(testData.billPayData);
     await billPayPage.verifyPaymentSuccess(
       testData.billPayData.payeeName,
       testData.billPayData.amount
+    );
+
+    // API - Verify bill payment transaction exists in backend
+    await apiHelper.verifyBillPaymentExists(
+      fromAccountId,
+      testData.billPayData.payeeName,
+      Number(testData.billPayData.amount)
     );
 
   });
