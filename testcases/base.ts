@@ -6,6 +6,7 @@ import { TransferFundsPage } from '../pages/TransferFundsPage';
 import { BillPayPage } from '../pages/BillPayPage';
 import { ApiHelper } from '../utils/apiHelper';
 import { TransactionHistoryPage } from '../pages/TransactionHistoryPage';
+import { OpenNewAccountPage } from '../pages/OpenNewAccountPage';
 
 export type TestOptions = {
   loginPage: LoginPage;
@@ -15,6 +16,8 @@ export type TestOptions = {
   billPayPage: BillPayPage;
   apiHelper: ApiHelper;
   transactionHistoryPage: TransactionHistoryPage;
+  openNewAccountPage: OpenNewAccountPage;
+
 };
 
 export const test = base.extend<TestOptions>({
@@ -33,14 +36,18 @@ export const test = base.extend<TestOptions>({
   billPayPage: async ({ page }, use) => {
     await use(new BillPayPage(page));
   },
+  openNewAccountPage: async ({ page }, use) => {
+    await use(new OpenNewAccountPage(page));
+  },
+  transactionHistoryPage: async ({ page }, use) => {
+    await use(new TransactionHistoryPage(page));
+  },
 
   // It automatically shares the browser session/cookies!
   apiHelper: async ({ request }, use) => {
     await use(new ApiHelper(request));
   },
-  transactionHistoryPage: async ({ page }, use) => {
-  await use(new TransactionHistoryPage(page));
-},
+
 });
 
 export { expect } from '@playwright/test';
