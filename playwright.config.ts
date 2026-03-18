@@ -1,7 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './testcases',
+  testDir: './',
+  testMatch: ['**/TC*.spec.ts'],
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: 1, // ← Add 1 retry - handles flaky Cloudflare issues
